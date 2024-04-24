@@ -58,6 +58,32 @@ const CharactersListViewModel = (
         updateCharacters();
     }, []);
 
+    const getCharacters = async () => {
+        setCharactersState({...charactersState, screenState: LoadingState});
+        const result = await getAllCharacters.execute();
+        const favorites = await getFavoriteCharacters.execute();
+        if (result instanceof SuccessResult) {
+            const characters = result.value
+            if (characters.length > 0) {
+                setCharactersState({
+                    ...charactersState,
+                    screenState: SuccessState,
+                    characters: characters,
+                    favorites: favorites
+                });
+            } else {
+                setCharactersState({
+                    ...charactersState,
+                    screenState: EmptyState,
+                    characters: characters,
+                    favorites: favorites
+                });
+            }
+        } else {
+            setCharactersState({...charactersState, screenState: ErrorState});
+        }
+    };
+
     const toggleFavourite = async (character: CharacterModel) => {
         const updatedCharacters = charactersState.characters.map(char =>
             char.id === character.id ? {...char, isFavourite: !char.isFavourite} : char
@@ -112,8 +138,7 @@ const CharactersListViewModel = (
         console.log(`applyFilter: ${filter} ${charactersState.appliedFilter}, query: ${charactersState.query} `);
     }
 
-
-    return {charactersState, toggleFavourite, search, applyFilter};
+    return {charactersState, toggleFavourite, search, getCharacters, applyFilter};
 };
 
 export default CharactersListViewModel;

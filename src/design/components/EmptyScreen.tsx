@@ -1,20 +1,21 @@
 import React from 'react';
-import {View, Text, Image, StyleSheet} from 'react-native';
-import {iconSizeLarge, paddingSmall} from "../theme/styles";
-import ActiveIcon from "./ActiveIcon";
+import {View, Text, StyleSheet} from 'react-native';
+import {iconSizeLarge, paddingLarge} from "../theme/styles";
+import {useTheme} from "react-native-paper";
+import ErrorFaceIcon from "./ErrorFaceIcon";
 
 
 const EmptyScreen = () => {
+    const theme = useTheme();
+
     return (
         <View style={styles.container}>
-            <Text style={styles.titleText}>
+            <Text style={[styles.title, {margin: paddingLarge}]}>
                 There's nothing here!
             </Text>
-            <View style={styles.icon}>
-                <ActiveIcon/>
-            </View>
+            <ErrorFaceIcon color={theme.colors.primary} size={iconSizeLarge}/>
 
-            <Text style={styles.bodyText}>
+            <Text style={[styles.description, {margin: paddingLarge}]}>
                 Add some characters to favorites
             </Text>
         </View>
@@ -27,18 +28,24 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    titleText: {
+    title: {
         textAlign: 'center',
+        fontSize: 20,
+        fontWeight: 'bold',
+        lineHeight: 24,
+        marginBottom: 20,
+        marginTop: 20,
     },
     icon: {
         alignSelf: 'center',
         alignContent: 'center',
-        width: 120,
-        height: 120,
     },
-    bodyText: {
+    description: {
         textAlign: 'center',
-        paddingHorizontal: paddingSmall,
+        fontSize: 18,
+        lineHeight: 22,
+        marginBottom: 20,
+        marginTop: 20,
     },
 });
 
