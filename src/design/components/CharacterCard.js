@@ -4,7 +4,7 @@ import {Card, useTheme} from 'react-native-paper';
 import {
     paddingSmall,
     cardHeight,
-    cornerRadiusSmall, cornerRadiusMedium, iconSizeMedium, iconSizeLarge,
+    cornerRadiusSmall, cornerRadiusMedium, iconSizeLarge,
 } from '../theme/styles.js';
 import FavouriteIcon from './FavouriteIcon.js';
 
@@ -20,7 +20,7 @@ const CharacterCard = ({character, onCharacterClick, onCharacterLongClick}) => {
     };
 
     return (
-        <Card onPress={handleTap}  onLongPress={handleLongPress} style={styles.card}>
+        <Card onPress={handleTap} onLongPress={handleLongPress} style={styles.card}>
             <View style={styles.row}>
                 <Image
                     source={{uri: character.iconUrl}}
@@ -48,7 +48,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        paddingHorizontal: paddingSmall,
     },
     image: {
         width: iconSizeLarge,

@@ -1,19 +1,16 @@
 // HomeScreen.js
-import React, {createContext, useCallback, useContext, useEffect, useMemo, useRef, useState} from 'react';
-import {FlatList, SafeAreaView, StyleSheet, TouchableOpacity, View} from 'react-native';
+import React, {useCallback, useContext, useEffect, useMemo, useRef, useState} from 'react';
+import {FlatList, SafeAreaView, StyleSheet, View} from 'react-native';
 import {
     Appbar,
     BottomNavigation,
     Button,
     Text,
-    List,
     Searchbar,
-    RadioButton,
     IconButton,
-    useTheme
 } from 'react-native-paper';
 import CharacterCard from "../../design/components/CharacterCard";
-import {iconSizeSmall, paddingMedium, paddingSmall} from "../../design/theme/styles";
+import {paddingMedium, paddingSmall} from "../../design/theme/styles";
 import CharacterModel from "../model/CharacterModel";
 import GetAllCharactersUseCase from "../domain/GetAllCharactersUseCase";
 import {CharacterRepositoryContext, i18n} from '../../../App';
@@ -33,15 +30,13 @@ import {
 } from '@gorhom/bottom-sheet';
 import RadioList from "../../design/components/RadioList";
 import StatusFilter from "../model/Filter";
-import Icon from "react-native-vector-icons/MaterialIcons";
-import {useMaterial3Theme} from "@pchmn/expo-material3-theme";
 
-const AllRoute = ({state, characters, onClick, onLongClick}) => {
-    return CharacterList({state, characters, onClick, onLongClick})
+const AllRoute = ({state, characters, tryAgain, onClick, onLongClick}) => {
+    return CharacterList({state, characters, tryAgain, onClick, onLongClick})
 };
 
-const FavoriteRoute = ({state, characters, onClick, onLongClick}) => {
-    return CharacterList({state, characters, onClick, onLongClick})
+const FavoriteRoute = ({state, characters, tryAgain, onClick, onLongClick}) => {
+    return CharacterList({state, characters, tryAgain, onClick, onLongClick})
 };
 
 const CharacterListScreen = ({navigation}) => {
@@ -54,8 +49,8 @@ const CharacterListScreen = ({navigation}) => {
 
     const [index, setIndex] = useState(0);
     const [routes] = React.useState([
-        { key: 'all', title: i18n.t('bottom_bar_characters'), focusedIcon: 'album' },
-        { key: 'favorite', title: i18n.t('bottom_bar_favourites'), focusedIcon: 'heart', unfocusedIcon: 'heart-outline'},
+        {key: 'all', title: i18n.t('bottom_bar_characters'), focusedIcon: require('../../../assets/ic_all_characters.png')},
+        {key: 'favorite', title: i18n.t('bottom_bar_favourites'), focusedIcon: 'heart', unfocusedIcon: 'heart-outline'},
     ]);
     const [searchQuery, setSearchQuery] = useState('');
     const [filter, setFilter] = React.useState(StatusFilter.All);
@@ -73,12 +68,15 @@ const CharacterListScreen = ({navigation}) => {
             case 'all':
                 return <AllRoute state={viewModel.charactersState.screenState}
                                  characters={viewModel.charactersState.characters}
+                                 tryAgain={viewModel.getCharacters}
                                  onClick={onClick}
                                  onLongClick={viewModel.toggleFavourite}
                 />;
             case 'favorite':
                 return <FavoriteRoute state={viewModel.charactersState.screenState}
-                                      characters={viewModel.charactersState.favorites} onClick={onClick}
+                                      characters={viewModel.charactersState.favorites}
+                                      tryAgain={viewModel.getCharacters}
+                                      onClick={onClick}
                                       onLongClick={viewModel.toggleFavourite}/>;
             default:
                 return null;
@@ -152,17 +150,18 @@ const BottomSheet = ({innerRef, onSubmit, filter, setFilter}) => {
 }
 
 
-const CharacterList = ({state, characters, onClick, onLongClick}) => {
+const CharacterList = ({state, characters, tryAgain, onClick, onLongClick}) => {
     switch (state) {
         case LoadingState:
             return <LoadingScreen/>;
         case ErrorState:
-            return <ErrorScreen tryAgain={onClick}/>;
+            return <ErrorScreen tryAgain={tryAgain}/>;
         case SuccessState:
             if (characters.length === 0) {
                 return <EmptyScreen/>
             } else {
                 return <FlatList
+                    style={{paddingHorizontal: paddingSmall}}
                     data={characters}
                     renderItem={({item}) => (
                         <CharacterItem item={item} onClick={() => onClick(item.id)}

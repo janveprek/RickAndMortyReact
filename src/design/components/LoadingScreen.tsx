@@ -1,10 +1,11 @@
 import React from "react";
-import {ActivityIndicator, StyleSheet, View} from "react-native";
+import {StyleSheet, View} from "react-native";
+import {ActivityIndicator} from "react-native-paper";
 
 const LoadingScreen = () => {
     return (
         <View style={styles.container}>
-            <ActivityIndicator size="large" color="#0000ff"/>
+            <ActivityIndicator size="large"/>
         </View>
     );
 };

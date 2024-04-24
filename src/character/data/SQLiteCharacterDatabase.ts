@@ -85,7 +85,7 @@ class SQLiteCharacterDatabase implements CharacterDatabase {
                 tx => {
                     tx.executeSql(
                         'INSERT INTO Character (id, name, status, imageUrl, isFavourite) VALUES (?, ?, ?, ?, ?);',
-                        [character.id, character.name, character.status, character.iconUrl, character.isFavourite ? 1 : 0],
+                        [character.id, character.name, character.status, character.iconUrl, 1],
                         (_, { rowsAffected }) => {
                             if (rowsAffected > 0) {
                                 resolve();
