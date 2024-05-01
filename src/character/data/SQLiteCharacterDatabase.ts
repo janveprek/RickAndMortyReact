@@ -59,8 +59,8 @@ class SQLiteCharacterDatabase implements CharacterDatabase {
     public getFavouriteCharacterByName = async (name: string): Promise<CharacterModel | null> => {
         return new Promise((resolve, reject) => {
             db.transaction(
-                tx => {
-                    tx.executeSql(
+                transaction => {
+                    transaction.executeSql(
                         'SELECT * FROM Character WHERE name = ?;',
                         [name],
                         (_, { rows }) => {
