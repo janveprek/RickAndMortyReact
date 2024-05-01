@@ -11,7 +11,6 @@ import FavouriteIcon from './FavouriteIcon.js';
 const CharacterCard = ({character, onCharacterClick, onCharacterLongClick}) => {
     const theme = useTheme();
     const handleTap = () => {
-        console.log('onCharacterClick');
         onCharacterClick(character.id);
     };
 
