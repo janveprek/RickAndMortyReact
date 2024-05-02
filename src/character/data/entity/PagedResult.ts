@@ -1,3 +1,5 @@
+import CharacterModel from "../../model/CharacterModel";
+
 class PagedResult {
     data: CharacterModel[];
 

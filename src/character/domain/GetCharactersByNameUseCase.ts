@@ -1,9 +1,9 @@
 import ResultWrapper from "../model/ResultWrapper";
 import CharacterModel from "../model/CharacterModel";
-import CharacterRepository from "./CharacterRepository";
 import StatusFilter from "../model/Filter";
+import {CharacterRepository} from "./CharacterRepository";
 
-interface GetCharactersByNameUseCase {
+export interface GetCharactersByNameUseCase {
     execute(name: string, filter?: StatusFilter): Promise<ResultWrapper<CharacterModel[]>>;
 }
 

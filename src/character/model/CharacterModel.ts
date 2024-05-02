@@ -5,12 +5,12 @@ class CharacterModel {
     iconUrl: string;
     isFavourite?: boolean;
 
-    constructor({ id, name, status, imageUrl }: { id: number; name: string; status: string; imageUrl: string }) {
+    constructor({ id, name, status, imageUrl, isFavourite = false}: { id: number; name: string; status: string; imageUrl: string, isFavourite?: boolean }) {
         this.id = id;
         this.name = name;
         this.status = status;
         this.iconUrl = imageUrl;
-        this.isFavourite = false;
+        this.isFavourite = isFavourite;
     }
 }
 

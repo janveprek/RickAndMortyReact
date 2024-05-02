@@ -3,18 +3,16 @@ import ResultWrapper from "../model/ResultWrapper";
 import CharacterDetail from "../model/CharacterDetail";
 import StatusFilter from "../model/Filter";
 
-abstract class CharacterRepository {
-    abstract getAllCharacters(page: number): Promise<ResultWrapper<CharacterModel[]>>;
+export interface CharacterRepository {
+    getAllCharacters(page: number): Promise<ResultWrapper<CharacterModel[]>>;
 
-    abstract getCharactersByName(name: string, filter: StatusFilter): Promise<ResultWrapper<CharacterModel[]>>;
+    getCharactersByName(name: string, filter: StatusFilter): Promise<ResultWrapper<CharacterModel[]>>;
 
-    abstract getFavouriteCharacters(): Promise<CharacterModel[]>;
+    getFavouriteCharacters(): Promise<CharacterModel[]>;
 
-    abstract addCharacterToFavorites(character: CharacterModel): Promise<void>;
+    addCharacterToFavorites(character: CharacterModel): Promise<void>;
 
-    abstract removeCharacterFromFavourites(character: CharacterModel): Promise<void>;
+    removeCharacterFromFavourites(character: CharacterModel): Promise<void>;
 
-    abstract getCharacterById(id: number): Promise<ResultWrapper<CharacterDetail>>;
+    getCharacterById(id: number): Promise<ResultWrapper<CharacterDetail>>;
 }
-
-export default CharacterRepository;

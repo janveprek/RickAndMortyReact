@@ -1,5 +1,5 @@
 import CharacterModel from "../model/CharacterModel";
-import CharacterRepository from "./CharacterRepository";
+import {CharacterRepository} from "./CharacterRepository";
 
 interface AddCharacterToFavoritesUseCase {
     execute(character: CharacterModel): Promise<void>;

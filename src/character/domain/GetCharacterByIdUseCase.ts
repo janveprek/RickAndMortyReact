@@ -1,11 +1,16 @@
 import CharacterRepositoryImpl from "../data/CharacterRepositoryImpl";
 import CharacterDetail from "../model/CharacterDetail";
 import ResultWrapper from "../model/ResultWrapper";
+import CharacterModel from "../model/CharacterModel";
+import {CharacterRepository} from "./CharacterRepository";
 
-class GetCharacterByIdUseCase {
-    characterRepository: CharacterRepositoryImpl;
+export interface GetCharacterByIdUseCase {
+    execute(id: number):  Promise<ResultWrapper<CharacterDetail>>;
+}
+class GetCharacterByIdUseCaseImpl implements GetCharacterByIdUseCase {
+    characterRepository: CharacterRepository;
 
-    constructor(characterRepository: CharacterRepositoryImpl) {
+    constructor(characterRepository: CharacterRepository) {
         this.characterRepository = characterRepository;
     }
 
@@ -14,4 +19,4 @@ class GetCharacterByIdUseCase {
     }
 }
 
-export default GetCharacterByIdUseCase;
+export default GetCharacterByIdUseCaseImpl;

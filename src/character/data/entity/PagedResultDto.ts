@@ -17,11 +17,6 @@ class PagedResultDto {
         return new PagedResultDto({result: characters});
     }
 
-    // toJson(): any {
-    //     return {
-    //         result: this.result.map((item) => item.toJson()),
-    //     };
-    // }
     toModel(): PagedResult {
         return new PagedResult(this.result.map(item => item.toModel()));
     }

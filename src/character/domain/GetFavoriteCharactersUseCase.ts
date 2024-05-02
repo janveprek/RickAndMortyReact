@@ -1,7 +1,7 @@
 import CharacterModel from "../model/CharacterModel";
-import CharacterRepository from "./CharacterRepository";
+import {CharacterRepository} from "./CharacterRepository";
 
-interface GetFavoriteCharactersUseCase {
+export interface GetFavoriteCharactersUseCase {
     execute(): Promise<CharacterModel[]>;
 }
 

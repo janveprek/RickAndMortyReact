@@ -1,5 +1,4 @@
 import CharacterApi from "./CharacterApi";
-import CharacterRepository from "../domain/CharacterRepository";
 import SuccessResult from "../model/SuccessResult";
 import ErrorResult from "../model/ErrorResult";
 import ResultWrapper from "../model/ResultWrapper";
@@ -7,6 +6,8 @@ import CharacterModel from "../model/CharacterModel";
 import CharacterDatabase from "./CharacterDb";
 import {Platform} from "react-native";
 import StatusFilter from "../model/Filter";
+import {CharacterRepository} from "../domain/CharacterRepository";
+import characterDb from "./CharacterDb";
 
 class CharacterRepositoryImpl implements CharacterRepository {
     charactersApi: CharacterApi;
@@ -55,7 +56,11 @@ class CharacterRepositoryImpl implements CharacterRepository {
     async getCharacterById(id: number): Promise<ResultWrapper<CharacterModel>> {
         try {
             const result = await this.charactersApi.getCharacterById(id);
-            const character = result.toModel();
+            const favourites = await this.getFavouriteCharacters();
+            let character = result.toModel();
+            if (favourites.some((fav) => fav.id === id)) {
+                character = { ...character, isFavourite: true };
+            }
             return new SuccessResult(character);
         } catch (e) {
             return new ErrorResult(e);

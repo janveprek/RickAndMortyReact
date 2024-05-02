@@ -10,8 +10,9 @@ class CharacterDetail {
     origin: string;
     location: string;
     iconUrl: string;
+    isFavourite?: boolean;
 
-    constructor({ id, name, status, species, type, gender, origin, location, iconUrl }) {
+    constructor({ id, name, status, species, type, gender, origin, location, iconUrl, isFavourite = false }) {
         this.id = id;
         this.name = name;
         this.status = status;
@@ -21,6 +22,7 @@ class CharacterDetail {
         this.origin = origin;
         this.location = location;
         this.iconUrl = iconUrl;
+        this.isFavourite = isFavourite;
     }
 }
 

@@ -1,18 +1,21 @@
-import ErrorResult from "../model/ErrorResult";
-import SuccessResult from "../model/SuccessResult";
-import CharacterRepositoryImpl from "../data/CharacterRepositoryImpl";
+import CharacterModel from "../model/CharacterModel";
+import ResultWrapper from "../model/ResultWrapper";
+import {CharacterRepository} from "./CharacterRepository";
 
-class GetAllCharactersUseCase {
-    characterRepository: CharacterRepositoryImpl;
+export interface GetAllCharactersUseCase {
+    execute(character: CharacterModel):  Promise<ResultWrapper<CharacterModel[]>>;
+}
 
-    constructor(characterRepository: CharacterRepositoryImpl) {
+class GetAllCharactersUseCaseImpl implements GetAllCharactersUseCase {
+    characterRepository: CharacterRepository;
+
+    constructor(characterRepository: CharacterRepository) {
         this.characterRepository = characterRepository;
     }
 
     async execute() {
-        const result = await this.characterRepository.getAllCharacters();
-        return result;
+        return await this.characterRepository.getAllCharacters(0);
     }
 }
 
-export default GetAllCharactersUseCase;
+export default GetAllCharactersUseCaseImpl;

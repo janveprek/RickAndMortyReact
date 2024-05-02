@@ -1,7 +1,7 @@
 import CharacterModel from "../model/CharacterModel";
-import CharacterRepository from "./CharacterRepository";
+import {CharacterRepository} from "./CharacterRepository";
 
-interface RemoveCharacterFromFavoritesUseCase {
+export interface RemoveCharacterFromFavoritesUseCase {
     execute(character: CharacterModel): Promise<void>;
 }
 
